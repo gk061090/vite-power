@@ -6,15 +6,11 @@ import { object, string, number, InferType } from "yup";
 const schema = () =>
   object({
     name: string().required(),
-    age: number()
-      .when("isBig", {
-        is: true,
-        then: (schema) => schema.min(5),
-        otherwise: (schema) => schema.min(0),
-      })
-      .when("$other", ([other], schema) =>
-        other === 4 ? schema.max(6) : schema
-      ),
+    age: number().when("isBig", {
+      is: true,
+      then: (schema) => schema.min(5),
+      otherwise: (schema) => schema.min(0),
+    }),
   });
 
 type FieldValues = InferType<ReturnType<typeof schema>>;
@@ -27,7 +23,9 @@ export default function App() {
     formState: { errors },
   } = useForm<FieldValues>({ resolver: yupResolver(schema()) });
 
-  const onSubmit: SubmitHandler<FieldValues> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    console.log(data);
+  };
 
   console.log(watch("name"));
 
