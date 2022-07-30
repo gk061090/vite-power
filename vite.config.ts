@@ -11,6 +11,7 @@ export default defineConfig(({ mode }) => ({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
+      // "@fcc/react-use": require.resolve("@fcc/react-use"),
     },
   },
 }));
